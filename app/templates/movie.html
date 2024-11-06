@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap"
+            rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+            <!-- Swiper CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+        <title>Movie Design</title>
+    </head>
+    
+    <body>
+        <div class="navbar">
+            <div class="nav-logo">
+              <a href="#">CINEFLIX</a>
+            </div>
+            <div class="nav-items">
+              <ul>
+                <li><a href="{{ url_for('routes.home')}}"> HOME </a></li>
+                <li><a href="#"> MOVIES </a></li>
+                <li><a href="{{ url_for('routes.tvshows')}}"> TV SHOWS </a></li>
+                <li><a href="{{ url_for('routes.animes')}}"> ANIMES </a></li>
+
+                <li><a href="#"> TOP IMDB </a></li>
+                
+              </ul>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for movies...">
+                <button onclick="filterMovies()">Search</button>
+            </div>
+            <div class="nav-button">
+                <div class="anim-layer"></div>
+            
+                {% if current_user.is_authenticated %}
+                    <!-- Show Logout button if user is logged in -->
+                    <a href="{{ url_for('routes.signout') }}">Logout</a>
+                {% else %}
+                    <!-- Show Sign In button if user is not logged in -->
+                    <a href="{{ url_for('routes.signin') }}">Sign In</a>
+                {% endif %}
+            
+            </div>
+            
+            
+            <div id="hamburger-menu">&#9776;</div>
+          </div>
+      
+          <div id="mobile-menu">
+            <div class="mobile-nav-items">
+              <ul>
+                <li><a href="#"> Home </a></li>
+                <li><a href="#"> Services </a></li>
+                <li><a href="#"> About </a></li>
+                <li><a href="#"> Contact </a></li>
+                <li><a href="#"> Home </a></li>
+              </ul>
+            </div>
+            <div class="mobile-nav-button">
+              <div class="anim-layer"></div>
+              <a href="#">Sign Up</a>
+            </div>
+            <div id="hamburger-cross">&#10006;</div>
+          </div>
+
+          <div class="slider">
+            <!-- Slide 1 -->
+            <div class="slide">
+              <div class="movie-image">
+                <img src="../static/images/venom_the_last_dance.jpg" height="30px" width="30%" alt="Movie Poster">
+                <div class="play-button"></div>
+              </div>
+              <div class="movie-details">
+                <div class="tags">
+                  <div class="tag">HD</div>
+                  <div class="tag">Movie</div>
+                  <div class="tag">2024</div>
+                </div>
+                <h2>Joker: Folie à Deux</h2>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <p class="description">
+                  While struggling with his dual identity, Arthur Fleck not only stumbles upon true love, but also finds the music that's always been inside him.
+                </p>
+                <a href="#" class="watch-now">Watch now</a>
+              </div>
+            </div>
+          
+            <!-- Slide 2 (Add more slides similarly) -->
+            <div class="slide">
+              <div class="movie-image">
+                <img src="https://digitalsynopsis.com/design/joker-2-poster/" alt="Movie Poster">
+                <div class="play-button"></div>
+              </div>
+              <div class="movie-details">
+                <div class="tags">
+                  <div class="tag">HD</div>
+                  <div class="tag">Movie</div>
+                  <div class="tag">2023</div>
+                </div>
+                <h2>Another Movie</h2>
+                <div class="rating">⭐⭐⭐☆☆</div>
+                <p class="description">
+                  This is a sample description for another movie, showcasing the excitement and adventure within the plot.
+                </p>
+                <a href="#" class="watch-now">Watch now</a>
+              </div>
+            </div>
+          
+            <!-- Navigation Buttons -->
+            <button class="nav-button22 prev" onclick="prevSlide()">❮</button>
+            <button class="nav-button22 next" onclick="nextSlide()">❯</button>
+          </div>
+
+
+                <div class="movie-list-container">
+                    <h1 class="movie-list-title">TRENDING MOVIES</h1>
+                    <div class="movie-list-wrapper">
+                        <div class="movie-list">
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="../static/images/venom_the_last_dance.jpg" alt="">
+                                <span class="movie-list-item-title">Venom the last dance</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/2.jpeg" alt="">
+                                <span class="movie-list-item-title">Star Wars</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/3.jpg" alt="">
+                                <span class="movie-list-item-title">Storm</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/4.jpg" alt="">
+                                <span class="movie-list-item-title">1917</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/5.jpg" alt="">
+                                <span class="movie-list-item-title">Avengers</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/6.jpg" alt="">
+                                <span class="movie-list-item-title">Her</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/7.jpg" alt="">
+                                <span class="movie-list-item-title">Her</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                </div>
+                <div class="movie-list-container">
+                    <h1 class="movie-list-title">TOP RATED MOVIES</h1>
+                    <div class="movie-list-wrapper">
+                        <div class="movie-list">
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/1.jpeg" alt="">
+                                <span class="movie-list-item-title">Her</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/2.jpeg" alt="">
+                                <span class="movie-list-item-title">Star Wars</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/3.jpg" alt="">
+                                <span class="movie-list-item-title">Storm</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/4.jpg" alt="">
+                                <span class="movie-list-item-title">1917</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/5.jpg" alt="">
+                                <span class="movie-list-item-title">Avengers</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/6.jpg" alt="">
+                                <span class="movie-list-item-title">Her</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/7.jpg" alt="">
+                                <span class="movie-list-item-title">Her</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                </div>
+                <div class="movie-list-container">
+                    <h1 class="movie-list-title">UPCOMING MOVIES</h1>
+                    <div class="movie-list-wrapper">
+                        <div class="movie-list">
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/1.jpeg" alt="">
+                                <span class="movie-list-item-title">Her</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/2.jpeg" alt="">
+                                <span class="movie-list-item-title">Star Wars</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/3.jpg" alt="">
+                                <span class="movie-list-item-title">Storm</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/4.jpg" alt="">
+                                <span class="movie-list-item-title">1917</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/5.jpg" alt="">
+                                <span class="movie-list-item-title">Avengers</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/6.jpg" alt="">
+                                <span class="movie-list-item-title">Her</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                            <div class="movie-list-item">
+                                <img class="movie-list-item-img" src="img/7.jpg" alt="">
+                                <span class="movie-list-item-title">Her</span>
+                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
+                                    hic fugit similique accusantium.</p>
+                                <button class="movie-list-item-button">Watch</button>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </div>
+                </div>
+                
+                       
+
+                <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    
+                <footer>
+                    <div class="content">
+                      <div class="top">
+                        <div class="logo-details">
+                        
+                          <span class="logo_name">CINEFLIX</span>
+                        </div>
+                      </div>
+                      <div class="link-boxes">
+                        <ul class="box">
+                          <li class="link_name">Cineflix</li>
+                          <li><a href="#">Home</a></li>
+                          <li><a href="#">About us</a></li>
+                        </ul>
+                        <ul class="box">
+                          <li class="link_name">Services</li>
+                          <li><a href="#">Web development</a></li>
+                          <li><a href="#">App development</a></li>
+                          <li><a href="#">Logo design</a></li>
+                          <li><a href="#">Card design</a></li>
+                        </ul>
+                        <ul class="box">
+                          <li class="link_name">Account</li>
+                          <li><a href="#">Profile</a></li>
+                          <li><a href="#">My account</a></li>
+                          <li><a href="#">Prefrences</a></li>
+                          <li><a href="#">Purchase</a></li>
+                        </ul>
+                        <ul class="box">
+                          <li class="link_name">Courses</li>
+                          <li><a href="#">SEO</a></li>
+                          <li><a href="#">Web design</a></li>
+                          <li><a href="#">Programming</a></li>
+                          <li><a href="#">Design</a></li>
+                        </ul>
+                        <ul class="box input-box">
+                          <li class="link_name">Subscribe to newsletter</li>
+                          <li><input type="text" placeholder="Enter your email"></li>
+                          <li><input type="button" value="Subscribe"></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="bottom-details">
+                      <div class="bottom_text">
+                        <span class="copyright_text">Copyright © 2023 <a href="#">CINEFLIX </a>All rights reserved</span>
+                        <span class="policy_terms">
+                          <a href="#">Privacy policy</a>
+                          <a href="#">Terms & condition</a>
+                        </span>
+                      </div>
+                    </div>
+                </footer>
+               
+            
+    
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+ 
+               
+        
+        
+
+        
+   
+    
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles3.css') }}">
+    <title>Sign In</title>
+</head>
+<body>
+    <div class="container right-panel-active">
+        <!-- Sign Up -->
+        <div class="container__form container--signup">
+            <form action="{{ url_for('routes.signup') }}" method="POST" class="form" id="form1">
+                <h2 class="form__title">Sign Up</h2>
+                <input type="text" name="username" placeholder="User" class="input" required />
+                <input type="email" name="email" placeholder="Email" class="input" required />
+                <input type="password" name="password" placeholder="Password" class="input" required />
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+        </div>
+    
+        <!-- Sign In -->
+        <div class="container__form container--signin">
+            <form action="{{ url_for('routes.signin') }}" method="POST" class="form" id="form2">
+                <h2 class="form__title">Sign In</h2>
+                <input type="email" name="email" placeholder="Email" class="input" required />
+                <input type="password" name="password" placeholder="Password" class="input" required />
+                <a href="#" class="link">Forgot your password?</a>
+                <button type="submit" class="btn" >Sign In</button>
+            </form>
+        </div>
+    
+        <!-- Overlay -->
+        <div class="container__overlay">
+            <div class="overlay">
+                <div class="overlay__panel overlay--left">
+                    <button class="btn" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay__panel overlay--right">
+                    <button class="btn" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const signInBtn = document.getElementById("signIn");
+const signUpBtn = document.getElementById("signUp");
+const container = document.querySelector(".container");
+
+signInBtn.addEventListener("click", () => {
+    container.classList.remove("right-panel-active");
+});
+
+signUpBtn.addEventListener("click", () => {
+    container.classList.add("right-panel-active");
+});
+
+// Enable form submission for both forms
+document.getElementById("form1").addEventListener("submit", (e) => {
+    // No e.preventDefault() to allow form submission
+});
+
+document.getElementById("form2").addEventListener("submit", (e) => {
+    // No e.preventDefault() to allow form submission
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
+
+    <h2>Search Results for "{{ search_term }}"</h2>
+    
+    {% if results %}
+        <div class="movie-results">
+            {% for movie in results %}
+                <div class="movie-item">
+                    <img class="movie-image" src="{{ movie.thumbnail_url }}" alt="{{ movie.title }}">
+
+                    <h3>{{ movie.title }}</h3>
+                    <p>{{ movie.description }}</p>
+                    <p><strong>Genre:</strong> {{ movie.genre }}</p>
+                    <a href="{{ movie.video_url }}" class="watch-button">Watch</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No results found for "{{ search_term }}".</p>
+    {% endif %}
+{% endblock %}

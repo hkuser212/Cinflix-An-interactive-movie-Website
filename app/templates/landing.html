@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap"
+            rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+            <!-- Swiper CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+        <title>Movie Design</title>
+        <style>
+    body{
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #1a1a1a;
+      font-family: Arial, sans-serif;
+
+            }
+
+    .container {
+      background-color: #194766;
+      padding: 40px;
+      max-width: 800px;
+      width: 650px;
+      text-align: center;
+      border-radius: 15px;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin: 100px 420px;
+    }
+
+    .container img {
+      max-width: 50px;
+      margin-bottom: 20px;
+    }
+
+    .container h1 {
+      font-size: 24px;
+      margin: 10px 0;
+      font-weight: bold;
+      color: #00d1dd;
+    }
+
+    .container p {
+      margin: 10px 0 30px;
+      font-size: 16px;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    .button {
+      background-color: #00f5ff;
+      color: #194766;
+      padding: 15px 25px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      display: inline-block;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+   
+
+    .button:hover {
+      background-color: #00d1dd;
+      transform: scale(1.05);
+    }
+  </style>
+        </style>
+    </head>
+    
+    <body>
+
+        <div class="navbar">
+            <div class="nav-logo">
+              <a href="#">CINEFLIX</a>
+            </div>
+            <div class="nav-items">
+              <ul>
+                <li><a href="#"> HOME </a></li>
+                <li><a href="{{ url_for('routes.movies')}}"> MOVIES </a></li>
+                <li><a href="{{ url_for('routes.tvshows')}}"> TV SHOWS </a></li>
+                
+                <li><a href="{{ url_for('routes.animes')}}"> ANIMES </a></li>
+
+                <li><a href="#"> FAVIOURITES </a></li>
+                
+              </ul>
+            </div>
+            <div class="search-bar">
+                <form action="{{ url_for('routes.search') }}" method="POST">
+                    <input type="text" name="search" placeholder="Search for movies..." required>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        
+            <div class="nav-button">
+                <div class="anim-layer"></div>
+            
+                {% if current_user.is_authenticated %}
+                    <!-- Show Logout button if user is logged in -->
+                    <a href="{{ url_for('routes.signout') }}">Logout</a>
+                {% else %}
+                    <!-- Show Sign In button if user is not logged in -->
+                    <a href="{{ url_for('routes.signin') }}">Sign In</a>
+                {% endif %}
+                
+            
+            </div>
+            
+            
+            <div id="hamburger-menu">&#9776;</div>
+          </div>
+      
+          <div id="mobile-menu">
+            <div class="mobile-nav-items">
+              <ul>
+                <li><a href="#"> Home </a></li>
+                <li><a href="#"> Services </a></li>
+                <li><a href="#"> About </a></li>
+                <li><a href="#"> Contact </a></li>
+                <li><a href="#"> Home </a></li>
+              </ul>
+            </div>
+            <div class="mobile-nav-button">
+              <div class="anim-layer"></div>
+              <a href="#">Sign Up</a>
+            </div>
+            <div id="hamburger-cross">&#10006;</div>
+          </div>
+      
+          <div class="container">
+            <h1>CINEFLIX</h1>
+            <p>Step into a world where stories come alive, emotions run deep, and every frame paints a thousand words. Whether you’re a cinephile seeking the latest releases or a casual viewer in search of cinematic magic, our curated selection awaits.
+
+            </p>
+            <a href="{{ url_for('routes.home') }}" class="button">Browse All Movies & Series →</a>
+          </div>
+
+          
+          <footer>
+            <div class="content">
+              <div class="top">
+                <div class="logo-details">
+                
+                  <span class="logo_name">CINEFLIX</span>
+                </div>
+              </div>
+              <div class="link-boxes">
+                <ul class="box">
+                  <li class="link_name">Cineflix</li>
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">About us</a></li>
+                </ul>
+                <ul class="box">
+                  <li class="link_name">Services</li>
+                  <li><a href="#">Web development</a></li>
+                  <li><a href="#">App development</a></li>
+                  <li><a href="#">Logo design</a></li>
+                  <li><a href="#">Card design</a></li>
+                </ul>
+                <ul class="box">
+                  <li class="link_name">Account</li>
+                  <li><a href="#">Profile</a></li>
+                  <li><a href="#">My account</a></li>
+                  <li><a href="#">Prefrences</a></li>
+                  <li><a href="#">Purchase</a></li>
+                </ul>
+                <ul class="box">
+                  <li class="link_name">Courses</li>
+                  <li><a href="#">SEO</a></li>
+                  <li><a href="#">Web design</a></li>
+                  <li><a href="#">Programming</a></li>
+                  <li><a href="#">Design</a></li>
+                </ul>
+                <ul class="box input-box">
+                  <li class="link_name">Subscribe to newsletter</li>
+                  <li><input type="text" placeholder="Enter your email"></li>
+                  <li><input type="button" value="Subscribe"></li>
+                </ul>
+              </div>
+            </div>
+            <div class="bottom-details">
+              <div class="bottom_text">
+                <span class="copyright_text">Copyright © 2023 <a href="#">CINEFLIX </a>All rights reserved</span>
+                <span class="policy_terms">
+                  <a href="#">Privacy policy</a>
+                  <a href="#">Terms & condition</a>
+                </span>
+              </div>
+            </div>
+        </footer>
+       
+    
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+       
+
+
+
+
+
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
