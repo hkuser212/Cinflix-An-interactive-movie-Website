@@ -1,0 +1,75 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <title>{% block title %}CINEFLIX{% endblock %}</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="nav-logo">
+            <a href="{{ url_for('routes.landing')}}">CINEFLIX</a>
+        </div>
+        <div class="nav-items">
+            <ul>
+                <li><a href="{{ url_for('routes.home') }}"> HOME </a></li>
+                <li><a href="{{ url_for('routes.movie') }}"> MOVIES </a></li>
+                <li><a href="{{ url_for('routes.tvshows') }}"> TV SHOWS </a></li>
+                <li><a href="{{ url_for('routes.animes') }}"> ANIMES </a></li>
+                <li><a href="#"> FAVORITES </a></li>
+            </ul>
+        </div>
+
+        <!-- Search bar -->
+        <div class="search-bar">
+            <form action="{{ url_for('routes.search') }}" method="POST">
+                <input type="text" name="query" placeholder="Search for movies..." required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    
+        <!-- User action button -->
+        <div class="nav-button">
+            <div class="anim-layer"></div>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('routes.signout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('routes.signin') }}">Sign In</a>
+            {% endif %}
+        </div>
+
+        <div id="hamburger-menu">&#9776;</div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu">
+        <div class="mobile-nav-items">
+            <ul>
+                <li><a href="{{ url_for('routes.home') }}">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="mobile-nav-button">
+            <div class="anim-layer"></div>
+            <a href="#">Sign Up</a>
+        </div>
+        <div id="hamburger-cross">&#10006;</div>
+    </div>
+
+    <!-- Main content block -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,23 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Search Results{% endblock %}
+
+
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
 
-    <h2>Search Results for "{{ search_term }}"</h2>
-    
-    {% if results %}
-        <div class="movie-results">
-            {% for movie in results %}
-                <div class="movie-item">
-                    <img class="movie-image" src="{{ movie.thumbnail_url }}" alt="{{ movie.title }}">
+<h2>Search Results for "{{ query }}"</h2>
 
-                    <h3>{{ movie.title }}</h3>
-                    <p>{{ movie.description }}</p>
-                    <p><strong>Genre:</strong> {{ movie.genre }}</p>
-                    <a href="{{ movie.video_url }}" class="watch-button">Watch</a>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No results found for "{{ search_term }}".</p>
-    {% endif %}
+{% if results %}
+    <div class="movie-results">
+        {% for movie in results %}
+            <div class="movie-item">
+                {% if movie.poster_path %}
+                    <img class="movie-image" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+                {% else %}
+                    <img class="movie-image" src="{{ url_for('static', filename='default_poster.jpg') }}" alt="No image available">
+                {% endif %}
+
+                <h3>{{ movie.title }}</h3>
+                <p>{{ movie.overview }}</p>
+                <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+                <a href="https://www.themoviedb.org/movie/{{ movie.id }}" class="watch-button">More Info</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination controls -->
+    <div class="pagination">
+        {% if current_page > 1 %}
+            <a href="{{ url_for('routes.search', query=query, page=current_page-1) }}" class="prev-page">Previous</a>
+        {% endif %}
+
+        <span>Page {{ current_page }} of {{ total_pages }}</span>
+
+        {% if current_page < total_pages %}
+            <a href="{{ url_for('routes.search', query=query, page=current_page+1) }}" class="next-page">Next</a>
+        {% endif %}
+    </div>
+{% else %}
+    <p>No results found for "{{ query }}".</p>
+{% endif %}
 {% endblock %}

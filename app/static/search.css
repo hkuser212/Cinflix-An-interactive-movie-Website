@@ -86,3 +86,26 @@ h2 {
     transform: scale(1.05); /* Slight grow on hover */
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination a {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #0056b3;
+}
+
+.pagination span {
+    font-weight: bold;
+}

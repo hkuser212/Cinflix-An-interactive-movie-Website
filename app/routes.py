@@ -1,18 +1,29 @@
-from flask import Blueprint,render_template, request, redirect, url_for, flash
+from flask import Blueprint,render_template, request, redirect, url_for, flash,current_app,jsonify
 from app.model import db, User,Movie
 from app import db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
-
+from app.tmdb import search_movies,get_tmdb_data,fetch_genres,fetch_movie_by_genres,get_movie_details
 routes = Blueprint('routes', __name__)
 
 
 @routes.route('/')
 def landing():
     return render_template('landing.html')
+@routes.route('/genres2')
+def genres2():
+    return render_template('genres2.html')
 
-@routes.route('/about')
-def about():
-    return render_template('about.html')
+@routes.route('/api/genres',methods=['GET'])
+def genres():
+    genres = fetch_genres()
+    return jsonify(genres)
+@routes.route('/api/movies2',methods=['POST'])
+def movies2():
+    data = request.get_json()
+    genre_ids = data.get('genres', [])
+    page = data.get('page', 1)
+    movies = fetch_movie_by_genres(genre_ids, page)
+    return jsonify(movies)
 
 @routes.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -65,28 +76,51 @@ def signin():
 def signout():
     logout_user()  # Assuming you have a logout_user function
     return redirect(url_for('routes.home'))  # Redirect to home or wherever
-@routes.route('/movies')
-def movies():
-    return render_template('movie.html')
+@routes.route('/movie')
+def movie():
+    trending_movies = get_tmdb_data('/trending/movie/day')
+    top_rated_movies = get_tmdb_data('/movie/top_rated')
+    upcoming_movies = get_tmdb_data('/movie/upcoming')
+    return render_template('movie.html',top_rated_movies=top_rated_movies['results'],upcoming_movies=upcoming_movies['results'],trending_movies=trending_movies['results'])
 
 @routes.route('/tvshows')
 def tvshows():
-    return render_template('tvshows.html')
+    
+    trending_tv_shows = get_tmdb_data('/trending/tv/day')
+    upcoming_tv_shows = get_tmdb_data('/tv/on_the_air')
+    top_rated_tv_shows = get_tmdb_data('/tv/top_rated')
+    return render_template('tvshows.html',trending_tv_shows=trending_tv_shows['results'],upcoming_tv_shows=upcoming_tv_shows['results'],top_rated_tv_shows=top_rated_tv_shows['results'])
 @routes.route('/animes')
 def animes():
     return render_template('animes.html')
-
-@routes.route("/search", methods=["GET", "POST"])
+@routes.route('/search', methods=['GET', 'POST'])
 def search():
-    search_term = request.form.get('search')
-    results = Movie.query.filter(
-        (Movie.title.ilike(f"%{search_term}%")) |
-        (Movie.genre.ilike(f"%{search_term}%")) |
-        (Movie.description.ilike(f"%{search_term}%"))
-    ).all()
-    return render_template('search_results.html', results=results, search_term=search_term)
+    query = request.form.get('query') if request.method == 'POST' else request.args.get('query')
+    page = request.args.get('page', 1, type=int)  # Get the page number from the query parameter
+    if query:
+            # Call the search_movies function to get search results
+            results = search_movies(query,page)
+            # Check if the API response contains results
+            if 'results' in results:
+                return render_template('search_results.html', results=results['results'],query=query,current_page=page,total_pages=results['total_pages'])
+            else:
+                return render_template('search_results.html', error="No results found.")
+    else:
+            return render_template('search.html', error="Please enter a query to search.")
+    
+    # Handle the case for GET requests (initial form render)
+
 
 
 @routes.route('/home')
 def home():
-    return render_template('home.html')
+    trending_movies = get_tmdb_data('/trending/movie/day')
+    trending_tv_shows = get_tmdb_data('/trending/tv/day')
+
+
+    return render_template('home.html',trending_movies=trending_movies['results'],trending_tv_shows=trending_tv_shows['results'])
+
+@routes.route('/movie-details/<int:movie_id>')
+def movie_details(movie_id):
+    movie_data = get_movie_details(movie_id)
+    return render_template('movie_details.html', movie=movie_data)   

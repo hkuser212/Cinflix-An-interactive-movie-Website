@@ -70,3 +70,7 @@ var getHubergerIcon = document.getElementById("hamburger-menu");
     }
   
     showSlide(currentSlide);
+
+
+
+

@@ -1,0 +1,113 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+body {
+    font-family: Arial, sans-serif;
+    background-color:rgb(28, 80, 80);
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+#app {
+    width:fit-content;
+}
+
+.genre-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-radius: 50px;
+}
+
+.genre-buttons button {
+    padding: 10px 20px;
+    background-color: #073bac;
+    border: none;
+    border-radius: 50px;
+    color: #e0e0e0;
+    cursor: pointer;
+    font-size:larger;
+    transition: background-color 0.3s ease;
+    font-family: "Poppins", sans-serif;
+
+    
+}
+
+.genre-buttons button:hover {
+    background-color: #e0e0e0;
+    color: #600f0f;
+}
+
+.genre-buttons button.selected {
+    background-color: #e0e0e0;
+    color: #600f0f;
+}
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.movie-card {
+    background-color: #162447;
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.movie-card img {
+    width: 100%;
+    border-radius: 20px;
+}
+.movie-card:hover {
+    background-color: #0222f3;
+    transform: scale(1.1);
+    transition: transform 0.5s ease;
+}
+
+.movie-title {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    background-color: #105dba;
+    border: none;
+    border-radius: 20px;
+    color: #e0e0e0;
+    cursor: pointer;
+}
+.pagination button:hover {
+    background-color: #e0e0e0;
+    color: #600f0f;
+    transition: background-color 0.3s ease;
+    
+}
+
+.movie-card button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-top: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+}
+
+.movie-card button:hover {
+    background-color: #0056b3;
+}

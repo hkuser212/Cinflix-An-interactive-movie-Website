@@ -12,6 +12,9 @@
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
             <!-- Swiper CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
         <title>Movie Design</title>
@@ -26,21 +29,24 @@
             <div class="nav-items">
               <ul>
                 <li><a href="#"> HOME </a></li>
-                <li><a href="{{ url_for('routes.movies')}}"> MOVIES </a></li>
+                <li><a href="{{ url_for('routes.movie')}}"> MOVIES </a></li>
                 <li><a href="{{ url_for('routes.tvshows')}}"> TV SHOWS </a></li>
                 
                 <li><a href="{{ url_for('routes.animes')}}"> ANIMES </a></li>
 
-                <li><a href="#"> FAVIOURITES </a></li>
+                <li><a href="{{ url_for('routes.genres2')}}"> GENRES </a></li>
                 
               </ul>
             </div>
+            {% block content %}
+
             <div class="search-bar">
                 <form action="{{ url_for('routes.search') }}" method="POST">
-                    <input type="text" name="search" placeholder="Search for movies..." required>
+                    <input type="text" name="query" placeholder="Search for movies..." required>
                     <button type="submit">Search</button>
                 </form>
             </div>
+            {% endblock %}
         
             <div class="nav-button">
                 <div class="anim-layer"></div>
@@ -127,127 +133,49 @@
             <button class="nav-button22 next" onclick="nextSlide()">❯</button>
           </div>
 
-                <div class="movie-list-container">
-                    <h1 class="movie-list-title">TRENDING MOVIES</h1>
-                    <div class="movie-list-wrapper">
-                        <div class="movie-list">
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="../static/images/venom_the_last_dance.jpg" alt="">
-                                <span class="movie-list-item-title">Venom the last dance</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/2.jpeg" alt="">
-                                <span class="movie-list-item-title">Star Wars</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/3.jpg" alt="">
-                                <span class="movie-list-item-title">Storm</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/4.jpg" alt="">
-                                <span class="movie-list-item-title">1917</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/5.jpg" alt="">
-                                <span class="movie-list-item-title">Avengers</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/6.jpg" alt="">
-                                <span class="movie-list-item-title">Her</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/7.jpg" alt="">
-                                <span class="movie-list-item-title">Her</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
+          <div class="movie-list-container">
+            <h1 class="movie-list-title">TRENDING MOVIES</h1>
+            <div class="movie-list-wrapper">
+                <div class="movie-list">
+                    {% for movie in trending_movies %}
+                        <div class="movie-list-item">
+                            <!-- Dynamically load movie poster images -->
+                            <img class="movie-list-item-img" src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+                            <span class="movie-list-item-title">{{ movie.title }}</span>
+                            <p class="movie-list-item-desc">{{ movie.overview[:100] }}...</p>
+                            
+                            <button class="movie-list-item-button">Watch</button>
                         </div>
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
+                    {% endfor %}
                 </div>
-                <div class="movie-list-container">
-                    <h1 class="movie-list-title">TRENDING SHOWS</h1>
-                    <div class="movie-list-wrapper">
-                        <div class="movie-list">
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/1.jpeg" alt="">
-                                <span class="movie-list-item-title">Her</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/2.jpeg" alt="">
-                                <span class="movie-list-item-title">Star Wars</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/3.jpg" alt="">
-                                <span class="movie-list-item-title">Storm</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/4.jpg" alt="">
-                                <span class="movie-list-item-title">1917</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/5.jpg" alt="">
-                                <span class="movie-list-item-title">Avengers</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/6.jpg" alt="">
-                                <span class="movie-list-item-title">Her</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
-                            <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/7.jpg" alt="">
-                                <span class="movie-list-item-title">Her</span>
-                                <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                    hic fugit similique accusantium.</p>
-                                <button class="movie-list-item-button">Watch</button>
-                            </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </div>
+        </div>
+        
+        <div class="movie-list-container">
+            <h1 class="movie-list-title">TRENDING TV SHOWS</h1>
+            <div class="movie-list-wrapper">
+                <div class="movie-list">
+                    {% for tv_show in trending_tv_shows %}
+                        <div class="movie-list-item">
+                            <!-- Dynamically load movie poster images -->
+                            <img class="movie-list-item-img" src="https://image.tmdb.org/t/p/w500{{ tv_show.poster_path }}" alt="{{ tv_show.title }}">
+                            <span class="movie-list-item-title">{{ tv_show.title }}</span>
+                            <p class="movie-list-item-desc">{{ tv_show.overview[:100] }}...</p>
+                            
+                            <button class="movie-list-item-button">Watch</button>
                         </div>
-                        <i class="fas fa-chevron-right arrow"></i>
-                    </div>
+                    {% endfor %}
                 </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </div>
+        </div>
                 <div class="movie-list-container">
                     <h1 class="movie-list-title">TRENDING NETFLIX</h1>
                     <div class="movie-list-wrapper">
                         <div class="movie-list">
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/1.jpeg" alt="">
+                                <img class="movie-list-item-img" src="" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
@@ -408,49 +336,49 @@
                             <div class="movie-list-wrapper">
                                 <div class="movie-list">
                                     <div class="movie-list-item">
-                                        <img class="movie-list-item-img" src="img/1.jpeg" alt="">
+                                        <img class="movie-list-item-img" src="../static/images/TopRated/12AngryMAN.jpg" alt="">
                                         <span class="movie-list-item-title">Her</span>
                                         <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                             hic fugit similique accusantium.</p>
                                         <button class="movie-list-item-button">Watch</button>
                                     </div>
                                     <div class="movie-list-item">
-                                        <img class="movie-list-item-img" src="img/2.jpeg" alt="">
+                                        <img class="movie-list-item-img" src="../static/images/TopRated/ForrestGump.jpg" alt="">
                                         <span class="movie-list-item-title">Star Wars</span>
                                         <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                             hic fugit similique accusantium.</p>
                                         <button class="movie-list-item-button">Watch</button>
                                     </div>
                                     <div class="movie-list-item">
-                                        <img class="movie-list-item-img" src="img/3.jpg" alt="">
+                                        <img class="movie-list-item-img" src="../static/images/TopRated/GoodFellas.jpg" alt="">
                                         <span class="movie-list-item-title">Storm</span>
                                         <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                             hic fugit similique accusantium.</p>
                                         <button class="movie-list-item-button">Watch</button>
                                     </div>
                                     <div class="movie-list-item">
-                                        <img class="movie-list-item-img" src="img/4.jpg" alt="">
+                                        <img class="movie-list-item-img" src="../static/images/TopRated/LordOfTheRings.jpg" alt="">
                                         <span class="movie-list-item-title">1917</span>
                                         <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                             hic fugit similique accusantium.</p>
                                         <button class="movie-list-item-button">Watch</button>
                                     </div>
                                     <div class="movie-list-item">
-                                        <img class="movie-list-item-img" src="img/5.jpg" alt="">
+                                        <img class="movie-list-item-img" src="../static/images/TopRated/Parasite.jpg" alt="">
                                         <span class="movie-list-item-title">Avengers</span>
                                         <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                             hic fugit similique accusantium.</p>
                                         <button class="movie-list-item-button">Watch</button>
                                     </div>
                                     <div class="movie-list-item">
-                                        <img class="movie-list-item-img" src="img/6.jpg" alt="">
+                                        <img class="movie-list-item-img" src="../static/images/TopRated/Schindler'sList.jpg" alt="">
                                         <span class="movie-list-item-title">Her</span>
                                         <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                             hic fugit similique accusantium.</p>
                                         <button class="movie-list-item-button">Watch</button>
                                     </div>
                                     <div class="movie-list-item">
-                                        <img class="movie-list-item-img" src="img/7.jpg" alt="">
+                                        <img class="movie-list-item-img" src="../static/images/TopRated/PulpFiction.jpg" alt="">
                                         <span class="movie-list-item-title">Her</span>
                                         <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                             hic fugit similique accusantium.</p>

@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 import os
+from dotenv import load_dotenv
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -14,8 +15,12 @@ DB_NAME = "site.db"
 
 def create_app():
     app = Flask(__name__)
+    load_dotenv()
+
     app.config['SECRET_KEY'] = 'hadewjfc3w212'  # Make sure to use a secure random key in production
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['TMDB_API_KEY'] = os.getenv('TMDB_API_KEY')
+    app.config['TMDB_BASE_URL'] = os.getenv('TMDB_BASE_URL')
     from .model import User,Movie
     from .routes import routes
     app.register_blueprint(routes)

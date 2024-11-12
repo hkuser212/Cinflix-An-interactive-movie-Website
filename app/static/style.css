@@ -404,6 +404,7 @@
     opacity: 0;
     transition: 1s all ease-in-out;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #00f5ff;
     
   }
   
@@ -439,11 +440,11 @@
     transform: scale(1.1);
   }
   .arrow {
-    font-size: 100px;
+    font-size:120px;
     position: absolute;
     top: 90px;
     right: 0;
-    color: lightgray;
+    color: rgb(6, 77, 210);
     opacity: 0.5;
     cursor: pointer;
   }
@@ -489,3 +490,6 @@
 .search-bar button:hover {
     background-color: #555;
 }
+
+/* genres page */
+
