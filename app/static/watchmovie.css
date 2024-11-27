@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #f5f5f5;
+}
+
+.movie-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.video-player {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+video {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.overlay:hover {
+    opacity: 1;
+}
+
+.play-pause-btn {
+    font-size: 50px;
+    color: white;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 50%;
+    user-select: none;
+}
+
+.overlay.show .play-pause-btn {
+    display: block;
+}
+
+.movie-details {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.movie-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.movie-description {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+.movie-meta span {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background: #333;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.related-movies {
+    margin-top: 20px;
+}
+
+.related-movies h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.related-movie-list {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.related-movie {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.related-movie img {
+    width: 120px;
+    border-radius: 10px;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.related-movie img:hover {
+    transform: scale(1.1);
+}
+
+.related-movie p {
+    margin-top: 5px;
+    font-size: 0.9rem;
+}

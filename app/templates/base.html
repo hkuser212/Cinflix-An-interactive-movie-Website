@@ -25,7 +25,7 @@
                 <li><a href="{{ url_for('routes.movie') }}"> MOVIES </a></li>
                 <li><a href="{{ url_for('routes.tvshows') }}"> TV SHOWS </a></li>
                 <li><a href="{{ url_for('routes.animes') }}"> ANIMES </a></li>
-                <li><a href="#"> FAVORITES </a></li>
+                <li><a href="{{ url_for('routes.genres2')}}"> GENRES </a></li>
             </ul>
         </div>
 
@@ -71,5 +71,7 @@
     <div class="content">
         {% block content %}{% endblock %}
     </div>
+    {% block scripts %}{% endblock %}
+
 </body>
 </html>

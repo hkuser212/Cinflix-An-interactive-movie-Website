@@ -1,37 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genres</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles5.css') }}">
+{% extends "base.html" %}
 
-</head>
+{% block title %}Genres{% endblock %}
 
-<body>
-    
-    <div id="app">
-        <!-- Genre Buttons -->
-        <div id="genres" class="genre-buttons">
-            <!-- Genre buttons will be populated here -->
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles5.css') }}">
+
+<div id="app">
+    <!-- Genre Buttons -->
+    <div id="genres" class="genre-buttons">
+        <!-- Genre buttons will be populated here -->
         <button id="clear-genres" onclick="clearGenres()">Clear</button>
-
-        </div>
-
-        <!-- Movies Grid -->
-        <div id="movies2" class="movie-grid">
-            <!-- Movies will be rendered here -->
-        </div>
-
-        <!-- Pagination -->
-        <div id="pagination" class="pagination">
-            <button onclick="changePage(-1)" id="prev-button" disabled>❮ Previous</button>
-            <span id="page-number">Page 1</span>
-            <button onclick="changePage(1)" id="next-button">Next ❯</button>
-        </div>
     </div>
 
-    <!-- JavaScript File -->
-    <script src="{{ url_for('static', filename='script1.js') }}"></script>
-</body>
-</html>
+    <!-- Movies Grid -->
+    <div id="movies2" class="movie-grid">
+        <!-- Movies will be rendered here -->
+    </div>
+
+    <!-- Pagination -->
+    <div id="pagination" class="pagination">
+        <button onclick="changePage(-1)" id="prev-button" disabled>❮ Previous</button>
+        <span id="page-number">Page 1</span>
+        <button onclick="changePage(1)" id="next-button">Next ❯</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='script1.js') }}"></script>
+{% endblock %}

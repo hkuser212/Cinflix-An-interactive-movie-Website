@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tv_show.title }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='tv_details.css') }}">
+
+<div class="tv-show-container">
+    <!-- TV Show Header with Poster and Title -->
+    <div class="tv-show-header">
+        <img src="https://image.tmdb.org/t/p/w500{{ tv_show.poster_path }}" alt="{{ tv_show.title }}">
+        <div>
+            <h1 class="tv-show-title">{{ tv_show.title }}</h1>
+            <p><strong>First Air Date:</strong> {{ tv_show.first_air_date }}</p>
+            <p><strong>Rating:</strong> ⭐ {{ tv_show.rating }}</p>
+            <p><strong>Genres:</strong> <span class="genres">{{ ', '.join(tv_show.genres) }}</span></p>
+        </div>
+    </div>
+
+    <!-- Description -->
+    <div class="tv-show-details">
+        <p><strong>Overview:</strong> {{ tv_show.overview }}</p>
+        <p><strong>Main Cast:</strong> <span class="cast">{{ ', '.join(tv_show.cast) }}</span></p>
+    </div>
+
+    <!-- Trailer Section -->
+    <div class="tv-show-trailer">
+        {% if tv_show.trailer %}
+            <iframe 
+                src="{{ tv_show.trailer }}" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>
+        {% else %}
+            <p>No trailer available.</p>
+        {% endif %}
+    </div>
+
+    <!-- Back Button -->
+     <div class="back-button-container">
+    <a href="{{ url_for('routes.home') }}" class="back-button">← Back to Home</a>
+  </div>
+</div>
+
+<script>
+    // Adding interactivity to the trailer section
+    const trailerIframe = document.querySelector('.tv-show-trailer iframe');
+    const trailerContainer = document.querySelector('.tv-show-trailer');
+
+    if (trailerIframe) {
+        trailerIframe.addEventListener('mouseover', () => {
+            trailerContainer.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.7)';
+        });
+        trailerIframe.addEventListener('mouseout', () => {
+            trailerContainer.style.boxShadow = 'none';
+        });
+    }
+</script>
+{% endblock %}

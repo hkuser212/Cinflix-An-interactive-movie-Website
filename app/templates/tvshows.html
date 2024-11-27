@@ -29,14 +29,20 @@
                 <li><a href="{{ url_for('routes.tvshows')}}"> TV SHOWS </a></li>
                 <li><a href="{{ url_for('routes.animes')}}"> ANIMES </a></li>
 
-                <li><a href="#"> TOP IMDB </a></li>
+                <li><a href="{{ url_for('routes.genres2')}}"> GENRES </a></li>
                 
               </ul>
             </div>
+            {% block content %}
+
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search for movies...">
-                <button onclick="filterMovies()">Search</button>
+                <form action="{{ url_for('routes.search') }}" method="POST">
+                    <input type="text" name="query" placeholder="Search for movies..." required>
+                    <button type="submit">Search</button>
+                </form>
             </div>
+            {% endblock %}
+
             <div class="nav-button">
                 <div class="anim-layer"></div>
             
@@ -71,53 +77,36 @@
             <div id="hamburger-cross">&#10006;</div>
           </div>
 
+        
           <div class="slider">
-            <!-- Slide 1 -->
-            <div class="slide">
-              <div class="movie-image">
-                <img src="../static/images/venom_the_last_dance.jpg" height="30px" width="30%" alt="Movie Poster">
-                <div class="play-button"></div>
-              </div>
-              <div class="movie-details">
-                <div class="tags">
-                  <div class="tag">HD</div>
-                  <div class="tag">Movie</div>
-                  <div class="tag">2024</div>
+            <!-- Slides will be dynamically generated -->
+            <div id="slides-container">
+              <!-- Example Slide (Dynamically Generated) -->
+              <div class="slide">
+                <div class="movie-image">
+                  <img src="../static/images/TrendingShows/GamOfThrone.jpg" alt="Movie Poster">
+                  <div class="play-button">▶</div>
                 </div>
-                <h2>Joker: Folie à Deux</h2>
-                <div class="rating">⭐⭐⭐⭐☆</div>
-                <p class="description">
-                  While struggling with his dual identity, Arthur Fleck not only stumbles upon true love, but also finds the music that's always been inside him.
-                </p>
-                <a href="#" class="watch-now">Watch now</a>
+                <div class="movie-details">
+                  <div class="tags">
+                    <div class="tag">HD</div>
+                    <div class="tag">Tv Show</div>
+                    <div class="tag">2024</div>
+                  </div>
+                  <h2>Game Of Throne</h2>
+                  <div class="rating">⭐⭐⭐⭐☆</div>
+                  <p class="description">
+                    While struggling with his dual identity, Arthur Fleck not only stumbles upon true love, but also finds the music that's always been inside him.
+                  </p>
+                  <a href="#" class="watch-now">Watch now</a>
+                </div>
               </div>
             </div>
-          
-            <!-- Slide 2 (Add more slides similarly) -->
-            <div class="slide">
-              <div class="movie-image">
-                <img src="https://digitalsynopsis.com/design/joker-2-poster/" alt="Movie Poster">
-                <div class="play-button"></div>
-              </div>
-              <div class="movie-details">
-                <div class="tags">
-                  <div class="tag">HD</div>
-                  <div class="tag">Movie</div>
-                  <div class="tag">2023</div>
-                </div>
-                <h2>Another Movie</h2>
-                <div class="rating">⭐⭐⭐☆☆</div>
-                <p class="description">
-                  This is a sample description for another movie, showcasing the excitement and adventure within the plot.
-                </p>
-                <a href="#" class="watch-now">Watch now</a>
-              </div>
-            </div>
-          
-            <!-- Navigation Buttons -->
             <button class="nav-button22 prev" onclick="prevSlide()">❮</button>
             <button class="nav-button22 next" onclick="nextSlide()">❯</button>
+
           </div>
+          
 
 
           <div class="movie-list-container">
@@ -131,7 +120,7 @@
                             <span class="movie-list-item-title">{{ tv_show.title }}</span>
                             <p class="movie-list-item-desc">{{ tv_show.overview[:100] }}...</p>
                             
-                            <button class="movie-list-item-button">Watch</button>
+                            <button class="movie-list-item-button" onclick="window.location.href='{{ url_for('routes.tv_show_details', tv_id=tv_show.id) }}';" >Watch</button>
                         </div>
                     {% endfor %}
                 </div>
@@ -149,7 +138,7 @@
                           <span class="movie-list-item-title">{{ tv_show.title }}</span>
                           <p class="movie-list-item-desc">{{ tv_show.overview[:100] }}...</p>
                           
-                          <button class="movie-list-item-button">Watch</button>
+                          <button class="movie-list-item-button" onclick="window.location.href='{{ url_for('routes.tv_show_details', tv_id=tv_show.id) }}';">Watch</button>
                       </div>
                   {% endfor %}
               </div>
@@ -167,7 +156,7 @@
                         <span class="movie-list-item-title">{{ tv_show.title }}</span>
                         <p class="movie-list-item-desc">{{ tv_show.overview[:100] }}...</p>
                         
-                        <button class="movie-list-item-button">Watch</button>
+                        <button class="movie-list-item-button" onclick="window.location.href='{{ url_for('routes.tv_show_details', tv_id=tv_show.id) }}';">Watch</button>
                     </div>
                 {% endfor %}
             </div>
@@ -244,7 +233,94 @@
    
     
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-
+<script>
+      let currentIndex = 0;  // Keeps track of the current slide
+    let slides = [];  // Initialize an empty array to hold the slides
+    const slidesContainer = document.getElementById('slides-container');  // The container where slides are inserted
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    
+    // Fetch and display movies
+    async function fetchTvShows() {
+      try {
+        const response = await fetch('/tv_shows/popular'); // Replace with your actual backend route
+        const data = await response.json();
+    
+        if (data.error) {
+          console.error(data.error);
+          return;
+        }
+    
+        // Create and insert slides dynamically
+        slides = data.results.map(tvShow => {
+          const slide = document.createElement('div');
+          slide.classList.add('slide');  // Add class to each slide
+          slide.innerHTML = `
+           <div class="movie-image">
+          <img src="https://image.tmdb.org/t/p/w500/${tvShow.poster_path}" alt="${tvShow.name}">
+          <div class="play-button">▶</div>
+        </div>
+        <div class="movie-details">
+          <div class="tags">
+            <div class="tag">HD</div>
+            <div class="tag">TV Show</div>
+            <div class="tag">${new Date(tvShow.first_air_date).getFullYear()}</div>
+          </div>
+          <h2>${tvShow.name}</h2>
+          <div class="rating">⭐ ${tvShow.vote_average.toFixed(1)}</div>
+          <p class="description">${tvShow.overview.substring(0, 150)}...</p>
+          <a href="#" class="watch-now">Watch now</a>
+        </div>
+          `;
+          slidesContainer.appendChild(slide);  // Append the slide to the container
+          return slide;  // Return the slide element for later use
+        });
+    
+        updateSlidePosition(slides,slidesContainer,currentIndex);  // Update the position to display the first slide correctly
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    }
+    
+    // Show the next slide
+    function nextSlide() {
+      if (slides.length === 0) return;  // Ensure there are slides before navigating
+    
+      if (currentIndex < slides.length - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;  // Loop back to the first slide
+      }
+      updateSlidePosition();
+    }
+    
+    // Show the previous slide
+    function prevSlide() {
+      if (slides.length === 0) return;  // Ensure there are slides before navigating
+    
+      if (currentIndex > 0) {
+        currentIndex--;
+      } else {
+        currentIndex = slides.length - 1;  // Loop back to the last slide
+      }
+      updateSlidePosition();
+    }
+    
+    // Update the position of the slides to show the correct one
+    function updateSlidePosition() {
+      if (slides.length === 0) return;  // Ensure there are slides to update
+    
+      const slideWidth = slides[0].offsetWidth;  // Get the width of the slides
+      slidesContainer.style.transform = `translateX(-${slideWidth * currentIndex}px)`;  // Move the slides container to show the current slide
+    }
+    
+    // Attach event listeners to navigation buttons
+    prevButton.addEventListener('click', prevSlide);
+    nextButton.addEventListener('click', nextSlide);
+    
+    // Fetch movies when the page loads
+    document.addEventListener('DOMContentLoaded', fetchTvShows);
+    
+</script>
 </body>
 </html>

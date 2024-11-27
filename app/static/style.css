@@ -1,6 +1,7 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
 
 
 * {
@@ -9,7 +10,7 @@
   }
   
   body {
-    font-family: "Roboto", sans-serif;
+    font-family: "Poppins", sans-serif;
     height: 100vh;
     background-color: rgb(28, 80, 80);
     width: 100%;
@@ -225,104 +226,141 @@
         font-size: 24px;
     }
   }
+/* Style for the slider container */
 
-  .slider {
-    width: 100%;
-    height: 70%;
-    position: relative;
-    display: flex;
-    border-radius: 15px;
-    background: linear-gradient(to bottom, rgba(47, 18, 18, 0), #151515);
-    overflow: hidden;
-    margin-top: 40px;
-  }
-  .slide {
-    min-width: 100%;
-    transition: 0.5s;
-    width: 100%;
-    display: flex;
-    align-items: center;
-  }
-  .movie-image {
-    width: 50%;
-    position: relative;
-  }
-  .movie-image img {
-    width: 100%;
-    height: 500px;
-    margin-left: 10px;
-    border-radius: 15px;
-  }
-  .play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 15px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
- 
-  .play-button::before {
-    content: "▶";
-    font-size: 24px;
-    color: #0e1d26;
-  }
-  .movie-details {
-    padding: 20px;
-    width: 50%;
-  }
-  .tags {
-    display: flex;
-    gap: 10px;
-  }
+.slider {
+  position: relative;
+  width:100%;
+  height: 500px;
+  margin: 20px auto;
+  overflow: hidden; /* Ensures content outside the container is hidden */
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom, rgba(47, 18, 18, 0), #151515);
+  color: #fff;
+}
 
-  .tag {
-    background-color: #008b8b;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-  }
-  h2 {
-    font-size: 28px;
-    margin: 10px 0;
-    color: #008b8b;
-  }
-  .rating {
-    margin: 10px 0;
-    font-size:x-large;
-    color: #008b8b;
-  }
-  .description {
-    font-size:x-large;
-    font-weight: bolder;
-    margin-bottom: 20px;
-    color: #008b8b;
-    font-family:'Times New Roman', Times, serif;
-  }
-  .watch-now {
-    background-color: #00f5ff;
-    color: #0e1d26;
-    padding: 10px 20px;
-    border-radius: 20px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 16px;
-  }
-.nav-button22{
+/* Slides Container */
+#slides-container {
+  display: flex; /* Align slides horizontally */
+  transition: transform 0.5s ease-in-out; /* Smooth transition for slide movement */
+  width: 100%; /* Ensures the container spans the full width */
+}
+
+/* Slide */
+.slide {
+  flex: 0 0 100%; /* Each slide takes up 100% of the container's width */
+  display: flex;
+  gap: 20px;
+  padding: 30px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Movie Image */
+.movie-image {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.movie-image img {
+  width: 300px  ;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.play-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.play-button:hover {
+  background: rgba(3, 91, 146, 0.9);
+  color: #000;
+}
+
+/* Movie Details */
+.movie-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;  
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size:larger;
+  text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+}
+
+h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.rating {
+  font-size: 1.2rem;
+  color: #0da9c5;
+}
+
+.description {
+  font-size:larger;
+  color: #ccc;
+  line-height: 1.4;
+  font-family: "Poppins", sans-serif;
+
+}
+
+.watch-now {
+  padding: 10px 20px;
+  background: #0cb5b5;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  font-size:larger;
+  text-align: center;
+  transition: background 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.watch-now:hover {
+  background: #07536e;
+}
+
+/* Navigation Buttons */
+.nav-button22 {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  font-size: 24px;
+  border: none;
+  font-size: 2rem;
   padding: 10px;
   cursor: pointer;
+  z-index: 10;
   border-radius: 50%;
 }
 
@@ -333,10 +371,11 @@
 .next {
   right: 10px;
 }
-  
- 
 
-  
+.nav-button22:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
 
 
 .movie-list-container {
@@ -407,9 +446,9 @@
     color: #00f5ff;
     
   }
-  
+
   .movie-list-item-desc {
-    padding: 20px;
+    padding: 7px;
     font-size: 14px;
     position: absolute;
     top: 30%;
@@ -418,6 +457,8 @@
     opacity: 0;
     transition: 1s all ease-in-out;
     margin-top: 40px;
+    color: #00f5ff;
+    font-family: "Poppins", sans-serif;
   }
   
   .movie-list-item-button {
@@ -433,7 +474,7 @@
     left: 50px;
     opacity: 0;
     transition: 1s all ease-in-out;
-    font-family:'Times New Roman', Times, serif;
+    font-family:"Poppins", sans-serif;
   }
   .movie-list-item-button:hover {
     background-color: #3de1cb;

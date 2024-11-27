@@ -15,8 +15,119 @@
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
         <title>Movie Design</title>
+        
     </head>
-    
+    <style>
+        .slider {
+    width: 100%;
+    height: 70%;
+    position: relative;
+    display: flex;
+    border-radius: 15px;
+    background: linear-gradient(to bottom, rgba(47, 18, 18, 0), #151515);
+    overflow: hidden;
+    margin-top: 40px;
+  }
+  .slide {
+    min-width: 100%;
+    transition: 0.5s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .movie-image {
+    width: 50%;
+    position: relative;
+  }
+  .movie-image img {
+    width: 100%;
+    height: 500px;
+    margin-left: 10px;
+    border-radius: 15px;
+  }
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+ 
+  .play-button::before {
+    content: "▶";
+    font-size: 24px;
+    color: #0e1d26;
+  }
+  .movie-details {
+    padding: 20px;
+    width: 50%;
+  }
+  .tags {
+    display: flex;
+    gap: 10px;
+  }
+
+  .tag {
+    background-color: #008b8b;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  h2 {
+    font-size: 28px;
+    margin: 10px 0;
+    color: #008b8b;
+  }
+  .rating {
+    margin: 10px 0;
+    font-size:x-large;
+    color: #008b8b;
+  }
+  .description {
+    font-size:x-large;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    color: #008b8b;
+    font-family:'Times New Roman', Times, serif;
+  }
+  .watch-now {
+    background-color: #00f5ff;
+    color: #0e1d26;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+  }
+.nav-button22{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+  
+ 
+</style>
     <body>
         <div class="navbar">
             <div class="nav-logo">
@@ -29,14 +140,20 @@
                 <li><a href="{{ url_for('routes.tvshows')}}"> TV SHOWS </a></li>
                 <li><a href="{{ url_for('routes.animes')}}"> ANIMES </a></li>
 
-                <li><a href="#"> TOP IMDB </a></li>
+                <li><a href="{{ url_for('routes.genres2')}}"> GENRES </a></li>
                 
               </ul>
             </div>
+            {% block content %}
+
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search for movies...">
-                <button onclick="filterMovies()">Search</button>
+                <form action="{{ url_for('routes.search') }}" method="POST">
+                    <input type="text" name="query" placeholder="Search for movies..." required>
+                    <button type="submit">Search</button>
+                </form>
             </div>
+            {% endblock %}
+
             <div class="nav-button">
                 <div class="anim-layer"></div>
             
@@ -75,7 +192,7 @@
             <!-- Slide 1 -->
             <div class="slide">
               <div class="movie-image">
-                <img src="../static/images/venom_the_last_dance.jpg" height="30px" width="30%" alt="Movie Poster">
+                <img src="../static/images/Anime/DeliciousDungeon.jpg" height="30px" width="30%" alt="Movie Poster">
                 <div class="play-button"></div>
               </div>
               <div class="movie-details">
@@ -96,7 +213,7 @@
             <!-- Slide 2 (Add more slides similarly) -->
             <div class="slide">
               <div class="movie-image">
-                <img src="https://digitalsynopsis.com/design/joker-2-poster/" alt="Movie Poster">
+                <img src="../static/images/Anime/BakiHanmaVsKenama.jpg" alt="Movie Poster">
                 <div class="play-button"></div>
               </div>
               <div class="movie-details">
@@ -113,6 +230,26 @@
                 <a href="#" class="watch-now">Watch now</a>
               </div>
             </div>
+            <div class="slide">
+              <div class="movie-image">
+                <img src="../static/images/Anime/BakiHanmaVsKenama.jpg" alt="Movie Poster">
+                <div class="play-button"></div>
+              </div>
+              <div class="movie-details">
+                <div class="tags">
+                  <div class="tag">HD</div>
+                  <div class="tag">Movie</div>
+                  <div class="tag">2023</div>
+                </div>
+                <h2>Another Movie</h2>
+                <div class="rating">⭐⭐⭐☆☆</div>
+                <p class="description">
+                  This is a sample description for another movie, showcasing the excitement and adventure within the plot.
+                </p>
+                <a href="#" class="watch-now">Watch now</a>
+              </div>
+            </div>
+          
           
             <!-- Navigation Buttons -->
             <button class="nav-button22 prev" onclick="prevSlide()">❮</button>
@@ -182,49 +319,49 @@
                     <div class="movie-list-wrapper">
                         <div class="movie-list">
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/1.jpeg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Popular Anime/Popular Anime/Attack on Titan.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/2.jpeg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Popular Anime/Popular Anime/Black Clover.jpg" alt="">
                                 <span class="movie-list-item-title">Star Wars</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/3.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Popular Anime/Popular Anime/Bleach.jpg" alt="">
                                 <span class="movie-list-item-title">Storm</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/4.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Popular Anime/Popular Anime/Blue Lock.jpg" alt="">
                                 <span class="movie-list-item-title">1917</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/5.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Popular Anime/Popular Anime/Death Note.jpg" alt="">
                                 <span class="movie-list-item-title">Avengers</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/6.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Popular Anime/Popular Anime/Demon Slayer Kimetsu no Yaiba.png" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/7.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Popular Anime/Popular Anime/Hell's Paradise.png" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
@@ -239,49 +376,49 @@
                     <div class="movie-list-wrapper">
                         <div class="movie-list">
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/1.jpeg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Upcoming Anime/Upcoming Anime/Attack on Titan The Last Attack.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/2.jpeg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Upcoming Anime/Upcoming Anime/Beastars Final Season.jpg" alt="">
                                 <span class="movie-list-item-title">Star Wars</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/3.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Upcoming Anime/Upcoming Anime/Genjitsu no Yohane Sunshine in the Mirror Movie.jpg" alt="">
                                 <span class="movie-list-item-title">Storm</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/4.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Upcoming Anime/Upcoming Anime/Give It All.jpg" alt="">
                                 <span class="movie-list-item-title">1917</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/5.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Upcoming Anime/Upcoming Anime/Kumarba Season 2.jpg" alt="">
                                 <span class="movie-list-item-title">Avengers</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/6.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Upcoming Anime/Upcoming Anime/Murder Mystery of the Dead.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/7.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/Upcoming Anime/Upcoming Anime/Solo Leveling ReAwakening.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
@@ -362,7 +499,28 @@
    
     
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+          let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+  
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.style.transform = `translateX(${(i - index) * 100}%)`;
+      });
+    }
+  
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+  
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+  
+    showSlide(currentSlide);
+    </script>
 
 </body>
 </html>

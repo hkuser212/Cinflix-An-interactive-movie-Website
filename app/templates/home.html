@@ -69,16 +69,14 @@
           <div id="mobile-menu">
             <div class="mobile-nav-items">
               <ul>
-                <li><a href="#"> Home </a></li>
-                <li><a href="#"> Services </a></li>
-                <li><a href="#"> About </a></li>
-                <li><a href="#"> Contact </a></li>
-                <li><a href="#"> Home </a></li>
+                <li><a href="{{ url_for('routes.landing')}}"> Home </a></li>
+                <li><a href="{{ url_for('routes.movie')}}"> About </a></li>
+                <li><a href="{{ url_for('routes.tvshows')}}"> Contact </a></li>
               </ul>
             </div>
             <div class="mobile-nav-button">
               <div class="anim-layer"></div>
-              <a href="#">Sign Up</a>
+              <a href="{{ url_for('routes.signin')}}">Sign Up</a>
             </div>
             <div id="hamburger-cross">&#10006;</div>
           </div>
@@ -86,54 +84,37 @@
     
         
           <div class="slider">
-            <!-- Slide 1 -->
-            <div class="slide">
-              <div class="movie-image">
-                <img src="../static/images/venom_the_last_dance.jpg" height="30px" width="30%" alt="Movie Poster">
-                <div class="play-button"></div>
-              </div>
-              <div class="movie-details">
-                <div class="tags">
-                  <div class="tag">HD</div>
-                  <div class="tag">Movie</div>
-                  <div class="tag">2024</div>
+            <!-- Slides will be dynamically generated -->
+            <div id="slides-container">
+              <!-- Example Slide (Dynamically Generated) -->
+              <div class="slide">
+                <div class="movie-image">
+                  <img src="../static/images/TrendingMovies/Joker.jpg" alt="Movie Poster">
+                  <div class="play-button">▶</div>
                 </div>
-                <h2>Venom: The Last Dance</h2>
-                <div class="rating">⭐⭐⭐⭐☆</div>
-                <p class="description">
-                  While struggling with his dual identity, Arthur Fleck not only stumbles upon true love, but also finds the music that's always been inside him.
-                </p>
-                <a href="#" class="watch-now">Watch now</a>
+                <div class="movie-details">
+                  <div class="tags">
+                    <div class="tag">HD</div>
+                    <div class="tag">Movie</div>
+                    <div class="tag">2024</div>
+                  </div>
+                  <h2>Joker 2</h2>
+                  <div class="rating">⭐⭐⭐⭐☆</div>
+                  <p class="description">
+                    While struggling with his dual identity, Arthur Fleck not only stumbles upon true love, but also finds the music that's always been inside him.
+                  </p>
+                  <a href="#" class="watch-now">Watch now</a>
+                </div>
               </div>
             </div>
-          
-            <!-- Slide 2 (Add more slides similarly) -->
-            <div class="slide">
-              <div class="movie-image">
-                <img src="https://digitalsynopsis.com/design/joker-2-poster/" alt="Movie Poster">
-                <div class="play-button"></div>
-              </div>
-              <div class="movie-details">
-                <div class="tags">
-                  <div class="tag">HD</div>
-                  <div class="tag">Movie</div>
-                  <div class="tag">2023</div>
-                </div>
-                <h2>Another Movie</h2>
-                <div class="rating">⭐⭐⭐☆☆</div>
-                <p class="description">
-                  This is a sample description for another movie, showcasing the excitement and adventure within the plot.
-                </p>
-                <a href="#" class="watch-now">Watch now</a>
-              </div>
-            </div>
-          
-            <!-- Navigation Buttons -->
             <button class="nav-button22 prev" onclick="prevSlide()">❮</button>
             <button class="nav-button22 next" onclick="nextSlide()">❯</button>
-          </div>
 
-          <div class="movie-list-container">
+          </div>
+          
+          
+
+          <div class="movie-list-container">    
             <h1 class="movie-list-title">TRENDING MOVIES</h1>
             <div class="movie-list-wrapper">
                 <div class="movie-list">
@@ -144,7 +125,7 @@
                             <span class="movie-list-item-title">{{ movie.title }}</span>
                             <p class="movie-list-item-desc">{{ movie.overview[:100] }}...</p>
                             
-                            <button class="movie-list-item-button">Watch</button>
+                            <button class="movie-list-item-button" onclick="window.location.href = '{{ url_for('routes.movie_details', movie_id=movie.id) }}';">Watch</button>
                         </div>
                     {% endfor %}
                 </div>
@@ -160,10 +141,10 @@
                         <div class="movie-list-item">
                             <!-- Dynamically load movie poster images -->
                             <img class="movie-list-item-img" src="https://image.tmdb.org/t/p/w500{{ tv_show.poster_path }}" alt="{{ tv_show.title }}">
-                            <span class="movie-list-item-title">{{ tv_show.title }}</span>
+                            <span class="movie-list-item-title1">{{ tv_show.title }}</span>
                             <p class="movie-list-item-desc">{{ tv_show.overview[:100] }}...</p>
                             
-                            <button class="movie-list-item-button">Watch</button>
+                            <button class="movie-list-item-button"    onclick="window.location.href='{{ url_for('routes.tv_show_details', tv_id=tv_show.id) }}';">Watch</button>
                         </div>
                     {% endfor %}
                 </div>
@@ -175,49 +156,49 @@
                     <div class="movie-list-wrapper">
                         <div class="movie-list">
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/ADifferentMan.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/2.jpeg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/ApocalypseZ.jpg" alt="">
                                 <span class="movie-list-item-title">Star Wars</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/3.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/Freedom.jpg" alt="">
                                 <span class="movie-list-item-title">Storm</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/4.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/RedOne.jpg" alt="">
                                 <span class="movie-list-item-title">1917</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/5.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/Terrifier3.jpg" alt="">
                                 <span class="movie-list-item-title">Avengers</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/6.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/TheSubstance.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/7.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/TheSubstance.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
@@ -232,49 +213,49 @@
                     <div class="movie-list-wrapper">
                         <div class="movie-list">
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/1.jpeg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/SuperManChristopherStory.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/2.jpeg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/Freedom.jpg" alt="">
                                 <span class="movie-list-item-title">Star Wars</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/3.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/Terrifier3.jpg" alt="">
                                 <span class="movie-list-item-title">Storm</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/4.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/TheCountofMonteCristo.jpg" alt="">
                                 <span class="movie-list-item-title">1917</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/5.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/TheWildRobot.jpg" alt="">
                                 <span class="movie-list-item-title">Avengers</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/6.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/Deadpool Wolverine.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
                                 <button class="movie-list-item-button">Watch</button>
                             </div>
                             <div class="movie-list-item">
-                                <img class="movie-list-item-img" src="img/7.jpg" alt="">
+                                <img class="movie-list-item-img" src="../static/images/TrendingMovies/TimeCut.jpg" alt="">
                                 <span class="movie-list-item-title">Her</span>
                                 <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
                                     hic fugit similique accusantium.</p>
@@ -284,63 +265,45 @@
                         <i class="fas fa-chevron-right arrow"></i>
                     </div>
                 </div>
+                
                 <div class="slider">
-                    <!-- Slide 1 -->
-                    <div class="slide">
-                      <div class="movie-image">
-                        <img src="../static/images/venom_the_last_dance.jpg" height="30px" width="30%" alt="Movie Poster">
-                        <div class="play-button"></div>
-                      </div>
-                      <div class="movie-details">
-                        <div class="tags">
-                          <div class="tag">HD</div>
-                          <div class="tag">Movie</div>
-                          <div class="tag">2024</div>
+                    <!-- Slides will be dynamically generated -->
+                    <div id="slides-container">
+                      <!-- Example Slide (Dynamically Generated) -->
+                      <div class="slide">
+                        <div class="movie-image">
+                          <img src="../static/images/TopRated/12AngryMAN.jpg" alt="Movie Poster">
+                          <div class="play-button">▶</div>
                         </div>
-                        <h2>Joker: Folie à Deux</h2>
-                        <div class="rating">⭐⭐⭐⭐☆</div>
-                        <p class="description">
-                          While struggling with his dual identity, Arthur Fleck not only stumbles upon true love, but also finds the music that's always been inside him.
-                        </p>
-                        <a href="#" class="watch-now">Watch now</a>
+                        <div class="movie-details">
+                          <div class="tags">
+                            <div class="tag">HD</div>
+                            <div class="tag">Movie</div>
+                            <div class="tag">1994</div>
+                          </div>
+                          <h2>12 Angry Men</h2>
+                          <div class="rating">⭐⭐⭐⭐☆</div>
+                          <p class="description">
+                            While struggling with his dual identity, Arthur Fleck not only stumbles upon true love, but also finds the music that's always been inside him.
+                          </p>
+                          <a href="#" class="watch-now">Watch now</a>
+                        </div>
                       </div>
                     </div>
-                  
-                    <!-- Slide 2 (Add more slides similarly) -->
-                    <div class="slide">
-                      <div class="movie-image">
-                        <img src="https://digitalsynopsis.com/design/joker-2-poster/" alt="Movie Poster">
-                        <div class="play-button"></div>
-                      </div>
-                      <div class="movie-details">
-                        <div class="tags">
-                          <div class="tag">HD</div>
-                          <div class="tag">Movie</div>
-                          <div class="tag">2023</div>
-                        </div>
-                        <h2>Another Movie</h2>
-                        <div class="rating">⭐⭐⭐☆☆</div>
-                        <p class="description">
-                          This is a sample description for another movie, showcasing the excitement and adventure within the plot.
-                        </p>
-                        <a href="#" class="watch-now">Watch now</a>
-                      </div>
-                    </div>
-                  
-                    <!-- Navigation Buttons -->
                     <button class="nav-button22 prev" onclick="prevSlide()">❮</button>
                     <button class="nav-button22 next" onclick="nextSlide()">❯</button>
+        
                   </div>
+               
                         <div class="movie-list-container">
                             <h1 class="movie-list-title">TOP IMDB</h1>
                             <div class="movie-list-wrapper">
                                 <div class="movie-list">
                                     <div class="movie-list-item">
-                                        <img class="movie-list-item-img" src="../static/images/TopRated/12AngryMAN.jpg" alt="">
-                                        <span class="movie-list-item-title">Her</span>
-                                        <p class="movie-list-item-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. At
-                                            hic fugit similique accusantium.</p>
-                                        <button class="movie-list-item-button">Watch</button>
+                                        <img class="movie-list-item-img" src="../static/images/TopRated/TheShawshankRedemption.jpg" alt="">
+                                        <span class="movie-list-item-title">The Shawshank Redemption</span>
+                                        <p class="movie-list-item-desc">In 1947, Andy Dufresne (Tim Robbins), a banker in Maine, is convicted of murdering his wife and her lover, a golf pro.</p>
+                                        <button class="movie-list-item-button" onclick="window.location.href='{{ url_for('routes.watchmovie') }}';">Watch</button>
                                     </div>
                                     <div class="movie-list-item">
                                         <img class="movie-list-item-img" src="../static/images/TopRated/ForrestGump.jpg" alt="">
@@ -459,6 +422,7 @@
     
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script1.js') }}"></script>
 
 </body>
 </html>

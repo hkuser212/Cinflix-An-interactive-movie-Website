@@ -1,68 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ movie.title }}</title>
-    <style>
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .movie-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .movie-header img {
-            width: 200px;
-            border-radius: 10px;
-        }
-        .movie-details {
-            padding: 20px 0;
-        }
-        .trailer {
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Movie Header with Poster and Title -->
-        <div class="movie-header">
-            <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }} Poster">
-            <div>
-                <h1>{{ movie.title }}</h1>
-                <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-                <p><strong>Rating:</strong> {{ movie.rating }}/10</p>
-                <p><strong>Genres:</strong> {{ movie.genres | join(', ') }}</p>
-            </div>
+{% extends "base.html" %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='movie_details.css') }}">
+<div class="container">
+    <!-- Movie Header with Poster and Title -->
+    <div class="movie-header">
+        <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" alt="{{ movie.title }} Poster">
+        <div>
+            <h1>{{ movie.title }}</h1>
+            <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+            <p><strong>Rating:</strong> {{ movie.rating }}/10</p>
+            <p><strong>Genres:</strong> {{ movie.genres | join(', ') }}</p>
         </div>
-
-        <!-- Movie Overview -->
-        <div class="movie-details">
-            <h2>Overview:</h2>
-            <p>{{ movie.overview }}</p>
-
-            <!-- Cast Section -->
-            <h2>Cast:</h2>
-            <ul>
-                {% for actor in movie.cast %}
-                    <li>{{ actor }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <!-- Trailer Section -->
-        {% if movie.trailer %}
-            <div class="trailer">
-                <h2>Trailer:</h2>
-                <iframe width="100%" height="315" src="{{ movie.trailer }}" frameborder="0" allowfullscreen></iframe>
-            </div>
-        {% else %}
-            <p><em>No trailer available for this movie.</em></p>
-        {% endif %}
     </div>
-</body>
-</html>
+
+    <!-- Movie Overview -->
+    <div class="movie-details">
+        <h2>Overview:</h2>
+        <p>{{ movie.overview }}</p>
+
+        <!-- Cast Section -->
+        <h2>Cast:</h2>
+        <ul>
+            {% for actor in movie.cast %}
+                <li>{{ actor }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Trailer Section -->
+    {% if movie.trailer %}
+        <div class="trailer">
+            <h2>Trailer:</h2>
+            <iframe width="100%" height="360" src="{{ movie.trailer }}" allowfullscreen></iframe>
+        </div>
+    {% else %}
+        <p class="no-trailer"><em>No trailer available for this movie.</em></p>
+    {% endif %}
+</div>
+{% endblock %}

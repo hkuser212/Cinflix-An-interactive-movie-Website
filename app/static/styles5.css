@@ -4,9 +4,6 @@ body {
     font-family: Arial, sans-serif;
     background-color:rgb(28, 80, 80);
     color: #e0e0e0;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
 }
 
 #app {
@@ -19,6 +16,8 @@ body {
     gap: 10px;
     margin-bottom: 20px;
     border-radius: 50px;
+    margin-top: 20px;
+    padding: 20px;
 }
 
 .genre-buttons button {
@@ -96,18 +95,3 @@ body {
     
 }
 
-.movie-card button {
-    display: inline-block;
-    padding: 8px 16px;
-    margin-top: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-family: "Poppins", sans-serif;
-}
-
-.movie-card button:hover {
-    background-color: #0056b3;
-}

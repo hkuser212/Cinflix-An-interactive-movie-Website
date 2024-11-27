@@ -33,8 +33,31 @@ def get_tmdb_data(endpoint, params=None):
         params['api_key'] = api_key
         response = requests.get(f'{base_url}{endpoint}', params=params,verify=False)
         return response.json()
- 
-
+def get_movies():
+    # Fetch popular movies from TMDb
+    api_key = current_app.config['TMDB_API_KEY']
+    url = f"https://api.themoviedb.org/3/movie/popular?api_key={api_key}&language=en-US&page=1"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()  # Return JSON if the request is successful
+    else:
+        return {"error": "Failed to fetch data from TMDb API"}  # Handle any errors
+def get_tv_shows():
+    api_key = current_app.config['TMDB_API_KEY']
+    url = f"https://api.themoviedb.org/3/tv/popular?api_key={api_key}&language=en-US&page=1"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()  # Return JSON if the request is successful
+    else:
+        return {"error": "Failed to fetch data from TMDb API"}  # Handle any errors
+def get_top_rated_movies():
+    api_key = current_app.config['TMDB_API_KEY']
+    url = f"https://api.themoviedb.org/3/movie/top_rated?api_key={api_key}&language=en-US&page=1"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()  # Return JSON if the request is successful
+    else:
+        return {"error": "Failed to fetch data from TMDb API"}  # Handle any errors
 def search_movies(query,page=1):
     base_url = current_app.config['TMDB_BASE_URL']
     api_key = current_app.config['TMDB_API_KEY']
@@ -83,3 +106,36 @@ def get_movie_details(movie_id):
             break
 
     return movie_data
+
+def get_tv_show_details(tv_id):
+    api_key = current_app.config['TMDB_API_KEY']
+    details_url = f'https://api.themoviedb.org/3/tv/{tv_id}?api_key={api_key}&language=en-US'
+    details_response = requests.get(details_url).json()
+
+    # Fetch the cast and crew information
+    cast_url = f'https://api.themoviedb.org/3/tv/{tv_id}/credits?api_key={api_key}&language=en-US'
+    cast_response = requests.get(cast_url).json()
+    
+    # Fetch the trailer (video) information
+    video_url = f'https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key={api_key}&language=en-US'
+    video_response = requests.get(video_url).json()
+    
+    # Add cast (only main cast) and trailer details to TV show data
+    tv_show_data = {
+        'title': details_response['name'],
+        'overview': details_response['overview'],
+        'first_air_date': details_response['first_air_date'],
+        'rating': details_response['vote_average'],
+        'poster_path': details_response['poster_path'],
+        'genres': [genre['name'] for genre in details_response['genres']],
+        'cast': [cast['name'] for cast in cast_response['cast'][:5]],  # Limit to 5 main cast members
+        'trailer': None
+    }
+
+    # Find the first YouTube trailer if available
+    for video in video_response['results']:
+        if video['type'] == 'Trailer' and video['site'] == 'YouTube':
+            tv_show_data['trailer'] = f'https://www.youtube.com/embed/{video["key"]}'
+            break
+
+    return tv_show_data

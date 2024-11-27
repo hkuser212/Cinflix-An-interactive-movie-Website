@@ -29,14 +29,20 @@
                 <li><a href="{{ url_for('routes.tvshows')}}"> TV SHOWS </a></li>
                 <li><a href="{{ url_for('routes.animes')}}"> ANIMES </a></li>
 
-                <li><a href="#"> TOP IMDB </a></li>
-                
+                <li><a href="{{ url_for('routes.genres2')}}"> GENRES </a></li>
+
               </ul>
             </div>
+            {% block content %}
+
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search for movies...">
-                <button onclick="filterMovies()">Search</button>
+                <form action="{{ url_for('routes.search') }}" method="POST">
+                    <input type="text" name="query" placeholder="Search for movies..." required>
+                    <button type="submit">Search</button>
+                </form>
             </div>
+            {% endblock %}
+
             <div class="nav-button">
                 <div class="anim-layer"></div>
             
@@ -71,53 +77,19 @@
             <div id="hamburger-cross">&#10006;</div>
           </div>
 
+       
           <div class="slider">
-            <!-- Slide 1 -->
-            <div class="slide">
-              <div class="movie-image">
-                <img src="../static/images/venom_the_last_dance.jpg" height="30px" width="30%" alt="Movie Poster">
-                <div class="play-button"></div>
-              </div>
-              <div class="movie-details">
-                <div class="tags">
-                  <div class="tag">HD</div>
-                  <div class="tag">Movie</div>
-                  <div class="tag">2024</div>
-                </div>
-                <h2>Joker: Folie à Deux</h2>
-                <div class="rating">⭐⭐⭐⭐☆</div>
-                <p class="description">
-                  While struggling with his dual identity, Arthur Fleck not only stumbles upon true love, but also finds the music that's always been inside him.
-                </p>
-                <a href="#" class="watch-now">Watch now</a>
-              </div>
+            <div id="slides-container">
+              <!-- Slides will be dynamically inserted here -->
             </div>
-          
-            <!-- Slide 2 (Add more slides similarly) -->
-            <div class="slide">
-              <div class="movie-image">
-                <img src="https://digitalsynopsis.com/design/joker-2-poster/" alt="Movie Poster">
-                <div class="play-button"></div>
-              </div>
-              <div class="movie-details">
-                <div class="tags">
-                  <div class="tag">HD</div>
-                  <div class="tag">Movie</div>
-                  <div class="tag">2023</div>
-                </div>
-                <h2>Another Movie</h2>
-                <div class="rating">⭐⭐⭐☆☆</div>
-                <p class="description">
-                  This is a sample description for another movie, showcasing the excitement and adventure within the plot.
-                </p>
-                <a href="#" class="watch-now">Watch now</a>
-              </div>
-            </div>
-          
             <!-- Navigation Buttons -->
             <button class="nav-button22 prev" onclick="prevSlide()">❮</button>
             <button class="nav-button22 next" onclick="nextSlide()">❯</button>
           </div>
+          
+          
+            <!-- Slide 2 (Add more slides similarly) -->
+           
 
 
           <div class="movie-list-container">
@@ -149,7 +121,7 @@
                                   <span class="movie-list-item-title">{{ movie.title }}</span>
                                   <p class="movie-list-item-desc">{{ movie.overview[:100] }}...</p>
                                   
-                                  <button class="movie-list-item-button">Watch</button>
+                                  <button class="movie-list-item-button" onclick="window.location.href='{{ url_for('routes.movie_details', movie_id=movie.id) }}';">Watch</button>
                               </div>
                           {% endfor %}
                       </div>

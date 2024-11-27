@@ -2,7 +2,7 @@ from flask import Blueprint,render_template, request, redirect, url_for, flash,c
 from app.model import db, User,Movie
 from app import db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
-from app.tmdb import search_movies,get_tmdb_data,fetch_genres,fetch_movie_by_genres,get_movie_details
+from app.tmdb import search_movies,get_tmdb_data,fetch_genres,fetch_movie_by_genres,get_movie_details,get_tv_show_details,get_movies,get_tv_shows,get_top_rated_movies
 routes = Blueprint('routes', __name__)
 
 
@@ -124,3 +124,26 @@ def home():
 def movie_details(movie_id):
     movie_data = get_movie_details(movie_id)
     return render_template('movie_details.html', movie=movie_data)   
+
+
+@routes.route('/tv-show-details/<int:tv_id>')
+def tv_show_details(tv_id):
+    tv_data = get_tv_show_details(tv_id)  # Fetch TV show details using the function we created
+    return render_template('tv_shows_details.html', tv_show=tv_data)  # Pass the data to the template
+
+@routes.route('/movies/popular', methods=['GET'])
+def popular_movies():
+    movies = get_movies()
+    return jsonify(movies)  # Return the movies (or error) as a JSON response
+@routes.route('/tv_shows/popular', methods=['GET'])
+def popular_tv_shows():
+    tv_shows = get_tv_shows()
+    return jsonify(tv_shows)
+@routes.route('/movies/top_rated', methods=['GET'])
+def top_rated_movies():
+    movies = get_top_rated_movies()
+    return jsonify(movies)
+
+@routes.route('/watchmovie')
+def watchmovie():
+    return render_template('watchmovie.html')

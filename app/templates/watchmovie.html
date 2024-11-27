@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Watch Movie{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='watchmovie.css') }}">
+<div class="movie-container">
+    <!-- Video Player -->
+    <div class="video-player">
+        <video id="movie-video" controls autoplay >
+            <source src="{{ url_for('static', filename='movie/shaw2.mp4.crdownload') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay">
+            <div class="play-pause-btn" onclick="togglePlay()">
+                ▶
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='watchmovie.js') }}"></script>
+{% endblock %}
