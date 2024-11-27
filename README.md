@@ -45,13 +45,13 @@ CineFlix is a sleek and interactive web application that lets users browse, watc
    cd CineFlix
 
 2.**Set up a Virtual Environment**
-      ```bash
+  ```bash
     python -m venv venv
     source venv/bin/activate   # For Linux/Mac
     venv\Scripts\activate      # For Windows
 
-3.**Install Dependencies**
-    ```bash
+3. **Install Dependencies**
+   ```bash
     pip install -r requirements.txt
 
 4.**Run the Application**
