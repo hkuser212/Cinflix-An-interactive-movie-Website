@@ -103,7 +103,7 @@
                             <span class="movie-list-item-title">{{ movie.title }}</span>
                             <p class="movie-list-item-desc">{{ movie.overview[:100] }}...</p>
                             
-                            <button class="movie-list-item-button">Watch</button>
+                            <button class="movie-list-item-button" onclick="window.location.href='{{ url_for('routes.movie_details', movie_id=movie.id) }}';">Watch</button>
                         </div>
                     {% endfor %}
                 </div>
@@ -139,7 +139,7 @@
                                 <span class="movie-list-item-title">{{ movie.title }}</span>
                                 <p class="movie-list-item-desc">{{ movie.overview[:100] }}...</p>
                                 
-                                <button class="movie-list-item-button">Watch</button>
+                                <button class="movie-list-item-button" onclick="window.location.href='{{ url_for('routes.movie_details', movie_id=movie.id) }}';">Watch</button>
                             </div>
                         {% endfor %}
                     </div>
